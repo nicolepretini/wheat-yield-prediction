@@ -1,0 +1,62 @@
+# Wheat Yield Prediction (FAOSTAT)
+
+This project uses historical FAOSTAT crop statistics to predict wheat yield (ton/ha) from year and region.
+
+It is a minimal end-to-end machine learning pipeline in Python:
+- Data loading and filtering (wheat only)
+- Train/test split
+- Preprocessing (year as numeric, region one-hot encoded)
+- Two models: Linear Regression and Random Forest
+- Evaluation using RMSE and R²
+
+## Data
+
+The dataset includes:
+- `Year`
+- `Region`
+- `Crop`
+- `Yield_ton_ha`
+
+Filtered subset:
+- Only rows where `Crop` contains "Wheat".
+
+## Methods
+
+1. Filter FAOSTAT data to wheat only.
+2. Remove rows with missing yield, year or region.
+3. Define features:
+   - `Year` (numeric)
+   - `Region` (categorical, one-hot encoded)
+4. Train two models:
+   - Linear Regression
+   - Random Forest Regressor
+5. Evaluate on a hold-out test set (20%) using:
+   - RMSE (root mean squared error)
+   - R² (coefficient of determination)
+
+## Results
+
+On the wheat subset (504 rows):
+
+| Model             | RMSE (ton/ha) | R²   |
+|-------------------|--------------:|:----:|
+| Linear Regression | 0.46          | 0.91 |
+| Random Forest     | 0.30          | 0.96 |
+
+The Random Forest model substantially improves prediction accuracy and explains ~96% of the variation in wheat yield in this dataset.
+
+## Tech stack
+
+- Python
+- pandas
+- scikit-learn
+- matplotlib
+
+## Interpretation of Results
+
+Note: FAOSTAT reports yields in kg/ha.
+Thus:
+- RMSE ≈ 458 → 0.458 t/ha
+- RMSE ≈ 303 → 0.303 t/ha
+
+These match expected wheat global yield prediction accuracy and align with typical regional yield variability.
